@@ -1,4 +1,3 @@
-'use client'
 import { useState } from "react";
 import MsgHistory from "./MsgHistory";
 import TextInputBox from "./TextInputBox";

@@ -21,7 +21,7 @@ const MsgHistory: React.FC<MsgHistoryProps> = ({hist}) => {
 };
 
 const Message: React.FC<MessageProps> = ({line, className}) => {
-  console.log(line);
+  // console.log(line);
   return (
     <div className={className}>{line}</div>
   );
