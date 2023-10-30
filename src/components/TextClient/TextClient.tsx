@@ -11,7 +11,7 @@ const TextClient = React.forwardRef<HTMLDivElement | null, TextClientProps>(({ c
 
   return (
     <div className="w-screen h-screen flex flex-col items-stretch justify-end p-4 gap-4">
-      <div ref={ref} className="flex flex-col gap-y-2 divide-y divide-zinc-700 overflow-y-auto"></div>
+      <div ref={ref} className="flex flex-col gap-y-2 divide-y divide-zinc-600 overflow-y-auto"></div>
       <TextInputBox client={client} />
     </ div>
   );

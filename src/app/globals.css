@@ -2,33 +2,65 @@
 @tailwind components;
 @tailwind utilities;
 
-/* :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 221, 221, 221;
-    --background-start-rgb: 27, 27, 27;
-    --background-end-rgb: 27, 27, 27;
-  }
-} */
-
 :root {
-  --foreground-rgb: 244, 244, 245; /* Tailwind Zinc 100 */
-  --background-start-rgb: 24, 24, 27; /* Tailwind Zinc 900 */
+  --color-material-overlay: 255 255 255; /* White/Black for Dark/Light mode */
+  --color-primary: theme(colors.amber.300);
+  --color-primary-variant: theme(colors.amber.600);
+  --color-secondary: theme(colors.blue.600);
+  --color-background: rgb(18 18 18);
+  --color-surface: rgb(38 38 38);
+  --color-surface-above: rgb(70 70 70);
+  /* --color-error: theme(); */
+
+  --color-on-primary: black;
+  /* --color-on-secondary: theme(); */
+  --color-on-background: white;
+  --color-on-background-subtle: theme(colors.neutral.700);
+  --color-on-surface: white;
+  --color-on-surface-subtle: theme(colors.neutral.700);
+  /* --color-on-error: theme(); */
+
+  --color-item-progression: theme(colors.yellow.400);
+  --color-item-important: theme(colors.fuchsia.400);
+  --color-item-trap: theme(colors.red.400);
+  --color-item-default: theme(colors.cyan.400);
+
+  --color-location-name: theme(colors.cyan.200);
+  --color-location-pending: theme(colors.red.600);
+  --color-location-found: theme(colors.green.500);
+
+  --shadow-key-umbra-opacity: 0.20;
+  --shadow-key-penumbra-opacity: 0.14;
+  --shadow-ambient-shadow-opacity: 0.12;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  /* background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb)); */
-  background: rgb(var(--background-start-rgb));
+  color: theme('colors.on.bg');
+  background: theme('colors.background');
   font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+}
+
+@layer utilities {
+  .overlay-i1 { box-shadow: inset 0 0 100vh 100vh rgb(var(--color-material-overlay) / 0.04); }
+  .overlay-i2 { box-shadow: inset 0 0 100vh 100vh rgb(var(--color-material-overlay) / 0.08); }
+  .overlay-i3 { box-shadow: inset 0 0 100vh 100vh rgb(var(--color-material-overlay) / 0.12); }
+
+  .elevation-4dp {
+    box-shadow: 0 4px 5px 0 rgb(0 0 0 / var(--shadow-key-penumbra-opacity)),
+                0 2px 4px -1px rgb(0 0 0 / var(--shadow-key-umbra-opacity)),
+                0 1px 10px 0 rgb(0 0 0 / var(--shadow-ambient-shadow-opacity));
+  }
+
+  .elevation-6dp {
+    box-shadow: 0 6px 10px 0 rgb(0 0 0 / var(--shadow-key-penumbra-opacity)),
+                0 3px 5px -1px rgb(0 0 0 / var(--shadow-key-umbra-opacity)),
+                0 1px 18px 0 rgb(0 0 0 / var(--shadow-ambient-shadow-opacity));
+  }
+
+  .elevation-8dp {
+    box-shadow: 0 8px 10px 1px rgb(0 0 0 / var(--shadow-key-penumbra-opacity)),
+                0 5px 5px -3px rgb(0 0 0 / var(--shadow-key-umbra-opacity)),
+                0 3px 14px 2px rgb(0 0 0 / var(--shadow-ambient-shadow-opacity));
+  }
+
 }

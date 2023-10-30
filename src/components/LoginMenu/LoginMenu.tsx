@@ -69,24 +69,28 @@ const LoginMenu: React.FC<LoginMenuProps> = ({client}) => {
 
   const LoginTextFields: LoginTextFieldProps[] = [
     { label: "Server", key: "serverAddress", placeholder: "Ex: archipelago.gg:42069", setter: setServerAddress, setterDefault: "" },
-    { label: "Player Name", key: "slotName", placeholder: "Ex: BBall Mikey", setter: setSlotName, setterDefault: "" },
+    { label: "Player Name", key: "slotName", placeholder: "Ex: BBallMikey", setter: setSlotName, setterDefault: "" },
     { label: "Password", key: "password", placeholder: "If none, leave blank", setter: setPassword, setterDefault: "" }
   ];
 
   return (
     <div className={`backdrop-blur absolute w-full h-full z-69 flex justify-center items-center ${loggedIn ? "hidden" : ""}`}>
-      <div className="filter-none flex flex-col items-center gap-4 leading-loose w-1/2 min-w-[25rem] rounded-3xl bg-slate-900 p-8 box-content">
+      <div className="filter-none flex flex-col items-center gap-4 leading-loose w-[35rem] shrink-0 rounded-3xl p-8 box-content bg-surface elevation-8dp">
 
         {LoginTextFields.map((line, i) => {
           return (
             <div key={i} className="flex flex-row w-full h-12 gap-4">
-              <label className="flex-auto w-1/3 flex justify-center items-center font-bold bg-blue-500 border-b-4 border-l-4 border-blue-700 select-none text-white text-lg">
+              <label className="flex-auto w-1/3 flex justify-center items-center font-bold bg-primary  border-primary-variant select-none text-on-primary text-lg elevation-4dp">
                 {line.label}
               </label>
               <input
                 type="text"
                 placeholder={line.placeholder}
-                className="flex-auto w-2/3 bg-slate-400 border text-slate-950 text-md rounded-lg focus:border-blue-700 p-2.5 border-gray-slate-200 outline-none placeholder:text-slate-600 disabled:bg-slate-200 disabled:text-slate-500 disabled:cursor-progress"
+                className="flex-auto w-2/3 p-2.5 elevation-8dp bg-surfaceL2
+                           text-md text-on-surface
+                           outline-none border-primary
+                           focus:border-b-4 focus:overlay-i3 focus:mb-[-4px]
+                           disabled:cursor-progress disabled:opacity-40"
                 disabled={lockMenu}
                 onInput={(e) => setTextFieldValue(e, line.setter, line.key, line.setterDefault)}
                 value={localStorage.getItem(line.key) ?? ""}
@@ -98,7 +102,9 @@ const LoginMenu: React.FC<LoginMenuProps> = ({client}) => {
         <input
           type="button"
           value="Connect"
-          className="h-12 w-full rounded-lg bg-yellow-500 text-slate-950 font-bold text-2xl hover:bg-yellow-300"
+          className="h-12 w-full bg-secondary
+                     text-on-secondary font-bold text-2xl
+                     hover:overlay-i3"
           onClick={connectToServer}
           disabled={lockMenu}
         />

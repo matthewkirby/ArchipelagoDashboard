@@ -16,7 +16,7 @@ const TextInputBox: React.FC<TextInputBoxProps> = ({ client }) => {
 
   return <input
     type="text"
-    className="bg-blue-950 text-zinc-100 rounded leading-loose p-2 box-border select-none"
+    className="bg-surfaceL2 text-on-surface rounded leading-loose p-2 box-border select-none"
     onKeyDown={onMsgSubmit}
   />;
 };

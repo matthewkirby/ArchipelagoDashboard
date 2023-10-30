@@ -11,9 +11,8 @@ interface MessageProps {
 
 const MsgHistory: React.FC<MsgHistoryProps> = ({hist}) => {
   return (
-    <div className="flex flex-col gap-y-2 divide-y divide-zinc-700 overflow-y-auto">
+    <div className="flex flex-col gap-y-2 divide-y divide-zinc-600 overflow-y-auto">
       {hist.map((line, i) => (
-        // <div key={i} className="block leading-loose">{line}</div>
         <Message line={line} key={i} className="block leading-loose" />
       ))}
     </div>
