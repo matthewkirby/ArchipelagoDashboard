@@ -1,5 +1,4 @@
-import React, { Ref, forwardRef, useState } from "react";
-import MsgHistory from "./MsgHistory";
+import React from "react";
 import TextInputBox from "./TextInputBox";
 import { Client } from "archipelago.js";
 

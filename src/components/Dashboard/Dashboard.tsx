@@ -1,15 +1,65 @@
 'use client'
 
 import LoginMenu from "@components/LoginMenu";
+import PlayerPresenceBar from "@components/PlayerPresenceBar";
 import TextClient from "@components/TextClient";
 import { Client, ITEM_FLAGS, PRINT_JSON_TYPE, PrintJSONPacket } from "archipelago.js";
-import { useEffect, useRef } from "react";
+import { useMemo, useRef, useState } from "react";
 
 const Dashboard: React.FC<{}> = () => {
 
+  const [isConnected, setIsConnected] = useState(false);
+  const [activePlayers, setActivePlayers] = useState([]);
+  const [myConnectedSlot, setMyConnectedSlot] = useState(null);
+  const [trackSlots, setTrackSlots] = useState([]);
   let msgHistoryRef = useRef<HTMLDivElement | null>(null);
-  const client = new Client();
-  const mySlots = [12];
+
+  // Set up the AP client connection
+  const client = useMemo(() => {
+    const apClient = new Client();
+
+    apClient.addListener("PrintJSON", (packet) => {
+      console.log(packet);
+
+      if (packet.type === "CommandResult") {
+        // This is super jank and sketch but there is no good way to get the connected playerlist sooooo...
+        const nPlayers = apClient.players.all.length - 1;
+        if (packet.data[0].text.includes(` players of ${nPlayers} connected `)) {
+          const updatingActivePlayers = [];
+          for (let i = 0; i < nPlayers; i++) {
+            const onePlayer = apClient.players.name(i+1);
+            if (!packet.data[0].text.includes(`(${onePlayer})`)) {
+              updatingActivePlayers.push(i+1)
+            }
+          }
+          setActivePlayers(updatingActivePlayers);
+        }
+      }
+
+      const msgDOMElement = formatMessage(packet, apClient);
+      msgHistoryRef.current?.appendChild(msgDOMElement);
+    });
+
+    apClient.addListener("Connected", (packet) => {
+      console.log(packet)
+      if (!isConnected) {
+        setTrackSlots([packet.slot]);
+        setMyConnectedSlot(packet.slot);
+        setIsConnected(true);
+        apClient.say("!players")
+      }
+    });
+
+    apClient.addListener("PacketReceived", (packet) => {
+      if (packet.cmd === "Connected") {}
+      else if (packet.cmd === "PrintJSON") {}
+      else {
+        console.log(packet)
+      }
+    });
+
+    return apClient;
+  }, [])
 
   const formatMessage = (packet: PrintJSONPacket, client: Client): HTMLDivElement => {
     const msgDOMElement = document.createElement("div");
@@ -67,15 +117,10 @@ const Dashboard: React.FC<{}> = () => {
     return msgDOMElement;
   };
 
-  client.addListener("PrintJSON", (packet) => {
-    console.log(packet);
-    const msgDOMElement = formatMessage(packet, client);
-    msgHistoryRef.current?.appendChild(msgDOMElement);
-  });
-
   return (
     <>
-      <LoginMenu client={client} />
+      { isConnected ? "" : <LoginMenu client={client} /> }
+      { isConnected ? <PlayerPresenceBar client={client} activePlayers={activePlayers} trackingSlots={trackSlots} /> : "" }
       <TextClient client={client} ref={msgHistoryRef} />
     </>
   );

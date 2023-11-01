@@ -16,8 +16,7 @@ interface LoginTextFieldProps {
 };
 
 
-const LoginMenu: React.FC<LoginMenuProps> = ({client}) => {
-  const [loggedIn, setLoggedIn] = useState(false);
+const LoginMenu: React.FC<LoginMenuProps> = ({ client }) => {
   const [lockMenu, setLockMenu] = useState(false);
   const [serverAddress, setServerAddress] = useState(localStorage.getItem("serverAddress") ?? "");
   const [slotName, setSlotName] = useState(localStorage.getItem("slotName") ?? "");
@@ -58,7 +57,6 @@ const LoginMenu: React.FC<LoginMenuProps> = ({client}) => {
     client.connect(connectionInfo)
       .then(() => {
         console.log("Connected to the server");
-        setLoggedIn(true);
         client.updateStatus(CLIENT_STATUS.CONNECTED);
       })
       .catch((error) => {
@@ -74,7 +72,7 @@ const LoginMenu: React.FC<LoginMenuProps> = ({client}) => {
   ];
 
   return (
-    <div className={`backdrop-blur absolute w-full h-full z-69 flex justify-center items-center ${loggedIn ? "hidden" : ""}`}>
+    <div className={"backdrop-blur absolute w-full h-full z-69 flex justify-center items-center"}>
       <div className="filter-none flex flex-col items-center gap-4 leading-loose w-[35rem] shrink-0 rounded-3xl p-8 box-content bg-surface elevation-8dp">
 
         {LoginTextFields.map((line, i) => {
